@@ -12,9 +12,14 @@ mongoose.Promise = global.Promise
 function create (params) {
   var newToDo = new Todo({
     name: params.name,
-    description: params.description,
-    completed: params.completed
   })
+  if (params.description) {
+    newToDo.description = params.description
+  } else newToDo.description = 'Default description'
+  if (params.completed) {
+    newToDo.completed = params.completed
+  } else newToDo.completed = false
+  
   newToDo.save(function (err, data) {
     if (err) throw err
     console.log(data)
@@ -34,7 +39,7 @@ function list () {
 
 function show (id) {
   // find the TODO with this id and console log it
-  Todo.find({_id : id}, function (err, document) {
+  Todo.find({_id: id}, function (err, document) {
     if (err) throw err
     console.log(document)
   })
@@ -43,10 +48,10 @@ function show (id) {
 function update (id, params) {
   // find the TODO with this id and update it's params. console log the result.
   var qObj = {
-    _id : id
+    _id: id
   }
   var updObj = {
-    name: params.name,
+    name: params.name
   }
   if (params.description) {
     updObj.description = params.description
@@ -54,17 +59,17 @@ function update (id, params) {
   if (params.completed) {
     updObj.completed = params.completed
   }
-  Todo.update(qObj, updObj, {new:true}, function (err, document) {
+  Todo.update(qObj, updObj, function (err, document) {
     if (err) throw err
     console.log(document)
   })
 }
-//need to check if name is greater than 5 chars
+// need to check if name is greater than 5 chars
 
 function destroy (id) {
   // find the TODO with this id and destroy it. console log success/failure.
   var qObj = {
-    _id : id
+    _id: id
   }
   Todo.remove(qObj, function (err, document) {
     if (err) {
