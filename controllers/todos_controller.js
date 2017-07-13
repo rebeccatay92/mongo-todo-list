@@ -12,14 +12,10 @@ mongoose.Promise = global.Promise
 function create (params) {
   var newToDo = new Todo({
     name: params.name,
+    description: params.description,
+    completed: params.completed
   })
-  if (params.description) {
-    newToDo.description = params.description
-  } else newToDo.description = 'Default description'
-  if (params.completed) {
-    newToDo.completed = params.completed
-  } else newToDo.completed = false
-  
+
   newToDo.save(function (err, data) {
     if (err) throw err
     console.log(data)
@@ -64,7 +60,6 @@ function update (id, params) {
     console.log(document)
   })
 }
-// need to check if name is greater than 5 chars
 
 function destroy (id) {
   // find the TODO with this id and destroy it. console log success/failure.
