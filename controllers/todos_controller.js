@@ -1,5 +1,12 @@
-// TODO. import TODO Model ;-)
-// const Todo = require('../models/todo')
+const url = 'mongodb://localhost:27017/mongoToDo'
+const mongoose = require('mongoose')
+
+mongoose.connect(url, {
+  useMongoClient: true
+})
+mongoose.Promise = global.Promise
+const Todo = require('../models/Todo.js')
+
 
 function create (params) {
   // create a new TODO and console log the response
